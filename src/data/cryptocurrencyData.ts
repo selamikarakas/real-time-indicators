@@ -61,9 +61,29 @@ function generateRandomPriceChange(): number {
 // Function to generate more mock data
 function generateMoreCryptoData(): CryptocurrencyData[] {
   const cryptoNames = [
-    "Cardano", "Polkadot", "Ripple", "Avalanche", "Chainlink", "Polygon",
-    "Cosmos", "Uniswap", "Litecoin", "Stellar", "VeChain", "Tron", "Algorand",
-    // ... add more names as needed
+    "Aave", "Binance Coin", "Compound", "Decentraland", "Elrond", "Fantom",
+    "Harmony", "Internet Computer", "Kusama", "Maker", "NEAR Protocol", "Optimism",
+    "PancakeSwap", "Quant", "Render", "Shiba Inu", "Synthetix", "Theta",
+    "The Graph", "Waves", "yearn.finance", "Zilliqa", "1inch", "Ankr",
+    "Basic Attention Token", "Curve DAO", "dYdX", "Enjin Coin", "Flow",
+    "Gala", "Hedera", "IoTeX", "Kava", "Loopring", "Mina", "Ocean Protocol",
+    "Perpetual Protocol", "QTUM", "Reserve Rights", "SushiSwap", "Terra",
+    "UMA", "VeThor Token", "Wax", "XDC Network", "yOUcash", "ZRX",
+    "Algorand", "Band Protocol", "Cosmos", "Dash", "EOS", "FTX Token",
+    "Golem", "Holo", "IOTA", "KuCoin Token", "Litecoin", "Monero",
+    "Neo", "OmiseGO", "Polkadot", "Ravencoin", "Stellar", "Tezos",
+    "Uniswap", "VeChain", "ChainLink", "XRP", "Zcash", "Cardano",
+    "Arweave", "BitTorrent", "TRON", "Dogecoin", "Ethereum Classic", "Filecoin",
+    "Helium", "ICON", "Klaytn", "Livepeer", "SAND", "NEM",
+    "Polygon", "Avalanche", "Request", "IOST", "Voyager Token", "Wrapped Bitcoin",
+    "XinFin Network", "Aion", "Balancer", "Celo", "DigiByte", "Ergo",
+    "Function X", "Horizen", "Injective Protocol", "Keep Network", "Linear",
+    "Mirror Protocol", "Nexo", "Origin Protocol", "Paxos Standard", "Reef",
+    "Status", "Telcoin", "Unibright", "Venus", "Wing", "xDai",
+    "Yield Guild Games", "Amp", "Bancor", "Chromia", "district0x", "Enzyme",
+    "Fetch.ai", "Huobi Token", "iExec RLC", "Kyber Network", "Lisk",
+    "MyNeighborAlice", "Numeraire", "Orion Protocol", "Persistence", "Raydium",
+    "Stacks", "THORChain", "Ultra", "Verge", "Wanchain", "XYO", "ZB Token"
   ];
 
   const additionalData: CryptocurrencyData[] = [];
