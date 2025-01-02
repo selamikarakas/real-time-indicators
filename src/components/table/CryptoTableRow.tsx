@@ -1,7 +1,7 @@
 import { TableCell, TableRow } from "@/components/ui/table"
+import { formatCurrency, formatNumber } from "@/lib/utils"
 import { CryptocurrencyData } from "@/types/cryptocurrency"
-import { TrendingUp, TrendingDown } from "lucide-react"
-import { formatCurrency, formatNumber, formatPercentage } from "@/lib/utils"
+import { TrendingDown, TrendingUp } from "lucide-react"
 
 interface PriceChangeCellProps {
   value: number
