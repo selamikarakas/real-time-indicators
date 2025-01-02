@@ -11,6 +11,13 @@ import {
 import { CustomPagination } from "@/components/ui/custom-pagination"
 import { CryptocurrencyData } from "@/types/cryptocurrency"
 import { useState } from "react"
+import { 
+  TrendingUp, 
+  TrendingDown, 
+  ArrowUpDown,
+  ChevronUp,
+  ChevronDown
+} from "lucide-react"
 
 interface CryptoTableProps {
   data: CryptocurrencyData[]
@@ -48,6 +55,27 @@ export function CryptoTable({ data }: CryptoTableProps) {
   // Format percentage
   const formatPercentage = (value: number) => {
     return `${value > 0 ? '+' : ''}${value.toFixed(2)}%`
+  }
+
+  const PriceChangeCell = ({ value }: { value: number }) => {
+    const isPositive = value >= 0
+    const Icon = isPositive ? TrendingUp : TrendingDown
+    
+    return (
+      <div className={`flex items-center gap-1 ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+        <Icon size={16} />
+        <span>{value.toFixed(2)}%</span>
+      </div>
+    )
+  }
+
+  const SortableHeader = ({ column, children }: { column: string, children: React.ReactNode }) => {
+    return (
+      <div className="flex items-center gap-1 cursor-pointer">
+        {children}
+        <ArrowUpDown size={16} className="text-gray-500" />
+      </div>
+    )
   }
 
   return (

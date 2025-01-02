@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react'
+
 export interface CryptocurrencyData {
   id: string;
   rank: number;
@@ -13,4 +15,10 @@ export interface CryptocurrencyData {
   ath: number;
   athDate: string;
   lastUpdated: string;
+}
+
+export interface IconProps {
+  icon: LucideIcon
+  size?: number
+  className?: string
 } 
