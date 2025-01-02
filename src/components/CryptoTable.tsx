@@ -18,6 +18,7 @@ import {
   ChevronUp,
   ChevronDown
 } from "lucide-react"
+import { getUniqueKey } from "@/lib/utils"
 
 interface CryptoTableProps {
   data: CryptocurrencyData[]
@@ -28,11 +29,59 @@ export function CryptoTable({ data }: CryptoTableProps) {
   const itemsPerPage = 10
   const totalPages = Math.ceil(data.length / itemsPerPage)
 
+  const getSortedData = (data: CryptocurrencyData[]) => {
+    if (!sortColumn) return data;
+
+    return [...data].sort((a, b) => {
+      let aValue: number;
+      let bValue: number;
+
+      switch (sortColumn) {
+        case 'rank':
+          aValue = a.rank;
+          bValue = b.rank;
+          break;
+        case 'price':
+          aValue = a.currentPrice;
+          bValue = b.currentPrice;
+          break;
+        case '24h':
+          aValue = a.priceChangePercentage24h;
+          bValue = b.priceChangePercentage24h;
+          break;
+        case '7d':
+          aValue = a.priceChangePercentage7d;
+          bValue = b.priceChangePercentage7d;
+          break;
+        case 'marketCap':
+          aValue = a.marketCap;
+          bValue = b.marketCap;
+          break;
+        case 'volume':
+          aValue = a.volume24h;
+          bValue = b.volume24h;
+          break;
+        case 'supply':
+          aValue = a.circulatingSupply;
+          bValue = b.circulatingSupply;
+          break;
+        default:
+          return 0;
+      }
+
+      if (sortDirection === 'asc') {
+        return aValue - bValue;
+      }
+      return bValue - aValue;
+    });
+  };
+
   const getCurrentPageData = () => {
-    const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
-    return data.slice(startIndex, endIndex)
-  }
+    const sortedData = getSortedData(data);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return sortedData.slice(startIndex, endIndex);
+  };
 
   // Format number to currency
   const formatCurrency = (value: number) => {
@@ -70,12 +119,34 @@ export function CryptoTable({ data }: CryptoTableProps) {
   }
 
   const SortableHeader = ({ column, children }: { column: string, children: React.ReactNode }) => {
+    const isSorted = sortColumn === column;
+    const Icon = isSorted 
+      ? (sortDirection === 'asc' ? ChevronUp : ChevronDown)
+      : ArrowUpDown;
+
     return (
-      <div className="flex items-center gap-1 cursor-pointer">
+      <div className="flex items-center gap-1">
         {children}
-        <ArrowUpDown size={16} className="text-gray-500" />
+        <Icon 
+          size={16} 
+          className={`${isSorted ? 'text-primary' : 'text-gray-500'}`}
+        />
       </div>
-    )
+    );
+  };
+
+  // First, let's add sorting state
+  const [sortColumn, setSortColumn] = useState<string | null>('rank')
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+
+  // Add a sort handler function
+  const handleSort = (column: string) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      setSortColumn(column)
+      setSortDirection('desc')
+    }
   }
 
   return (
@@ -83,19 +154,50 @@ export function CryptoTable({ data }: CryptoTableProps) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Rank</TableHead>
+            <TableHead 
+              onClick={() => handleSort('rank')} 
+              className="w-[100px] cursor-pointer"
+            >
+              <SortableHeader column="rank">
+                Rank
+              </SortableHeader>
+            </TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>24h %</TableHead>
-            <TableHead>7d %</TableHead>
-            <TableHead>Market Cap</TableHead>
-            <TableHead>Volume (24h)</TableHead>
-            <TableHead>Circulating Supply</TableHead>
+            <TableHead onClick={() => handleSort('price')} className="cursor-pointer">
+              <SortableHeader column="price">
+                Price
+              </SortableHeader>
+            </TableHead>
+            <TableHead onClick={() => handleSort('24h')} className="cursor-pointer">
+              <SortableHeader column="24h">
+                24h %
+              </SortableHeader>
+            </TableHead>
+            <TableHead onClick={() => handleSort('7d')} className="cursor-pointer">
+              <SortableHeader column="7d">
+                7d %
+              </SortableHeader>
+            </TableHead>
+            <TableHead onClick={() => handleSort('marketCap')} className="cursor-pointer">
+              <SortableHeader column="marketCap">
+                Market Cap
+              </SortableHeader>
+            </TableHead>
+            <TableHead onClick={() => handleSort('volume')} className="cursor-pointer">
+              <SortableHeader column="volume">
+                Volume (24h)
+              </SortableHeader>
+            </TableHead>
+            <TableHead onClick={() => handleSort('supply')} className="cursor-pointer">
+              <SortableHeader column="supply">
+                Circulating Supply
+              </SortableHeader>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {getCurrentPageData().map((crypto) => (
-            <TableRow key={crypto.id}>
+          {getCurrentPageData().map((crypto, index) => (
+            <TableRow key={getUniqueKey(crypto, index)}>
               <TableCell>{crypto.rank}</TableCell>
               <TableCell className="font-medium">
                 <div className="flex items-center gap-2">
