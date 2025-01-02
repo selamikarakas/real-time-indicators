@@ -14,7 +14,6 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@next/font": "^14.2.15",
     "@radix-ui/react-slot": "^1.1.1",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
