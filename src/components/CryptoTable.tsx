@@ -8,14 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import { CustomPagination } from "@/components/ui/custom-pagination"
 import { CryptocurrencyData } from "@/types/cryptocurrency"
 import { useState } from "react"
 
@@ -98,33 +91,11 @@ export function CryptoTable({ data }: CryptoTableProps) {
       </Table>
 
       <div className="mt-4">
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious 
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-              />
-            </PaginationItem>
-            {[...Array(totalPages)].map((_, index) => (
-              <PaginationItem key={index + 1}>
-                <PaginationLink
-                  onClick={() => setCurrentPage(index + 1)}
-                  isActive={currentPage === index + 1}
-                  className="cursor-pointer"
-                >
-                  {index + 1}
-                </PaginationLink>
-              </PaginationItem>
-            ))}
-            <PaginationItem>
-              <PaginationNext 
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <CustomPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   )

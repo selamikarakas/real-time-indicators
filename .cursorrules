@@ -75,3 +75,12 @@ You are an expert in Next.js, TypeScript, Tailwind CSS, and financial data visua
 - Validate user inputs thoroughly, especially for financial data entry
 
 Remember to follow Next.js documentation for the latest best practices in routing, data fetching, and rendering strategies.
+
+## Package management
+
+- use pnpm for package management
+- use pnpm add <package> for adding packages
+- use pnpm remove <package> for removing packages
+- use pnpm install for installing all packages
+- use pnpm update for updating all packages
+- use pnpm upgrade for upgrading all packages
