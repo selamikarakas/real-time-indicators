@@ -1,4 +1,5 @@
 import { CryptocurrencyData } from "@/types/cryptocurrency"
+import { match } from "ts-pattern"
 
 export const getSortedData = (
   data: CryptocurrencyData[], 
@@ -8,42 +9,19 @@ export const getSortedData = (
   if (!sortColumn) return data;
 
   return [...data].sort((a, b) => {
-    let aValue: number;
-    let bValue: number;
+    const getValue = (item: CryptocurrencyData) => match(sortColumn)
+      .with('rank', () => item.rank)
+      .with('price', () => item.currentPrice)
+      .with('24h', () => item.priceChangePercentage24h)
+      .with('7d', () => item.priceChangePercentage7d)
+      .with('marketCap', () => item.marketCap)
+      .with('volume', () => item.volume24h)
+      .with('supply', () => item.circulatingSupply)
+      .otherwise(() => 0);
 
-    switch (sortColumn) {
-      case 'rank':
-        aValue = a.rank;
-        bValue = b.rank;
-        break;
-      case 'price':
-        aValue = a.currentPrice;
-        bValue = b.currentPrice;
-        break;
-      case '24h':
-        aValue = a.priceChangePercentage24h;
-        bValue = b.priceChangePercentage24h;
-        break;
-      case '7d':
-        aValue = a.priceChangePercentage7d;
-        bValue = b.priceChangePercentage7d;
-        break;
-      case 'marketCap':
-        aValue = a.marketCap;
-        bValue = b.marketCap;
-        break;
-      case 'volume':
-        aValue = a.volume24h;
-        bValue = b.volume24h;
-        break;
-      case 'supply':
-        aValue = a.circulatingSupply;
-        bValue = b.circulatingSupply;
-        break;
-      default:
-        return 0;
-    }
-
+    const aValue = getValue(a);
+    const bValue = getValue(b);
+    
     return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
   });
 }; 
