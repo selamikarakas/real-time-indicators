@@ -5,6 +5,8 @@ import { JetBrains_Mono } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
+import { ThemeProvider } from '@/components/ThemeProvider'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,11 +46,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider>
+          <header className="container mx-auto py-4 px-4 flex justify-between items-center">
+            <div className="text-2xl font-bold">Crypto Dashboard</div>
+            <ThemeToggle />
+          </header>
+          {children}
+        </ThemeProvider>
         <SpeedInsights />
         <Analytics />
       </body>
