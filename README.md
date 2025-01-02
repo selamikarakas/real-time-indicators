@@ -1,5 +1,8 @@
 # Cryptocurrency Market Data Display
 
+> **Note**: This project was built using [Cursor](https://cursor.sh/), an AI-powered code editor, as an experimental exploration of its capabilities in assisting with Next.js and TypeScript development. While Cursor provided helpful suggestions and code completions, all core functionality and architecture decisions were carefully reviewed and implemented by myself (at least at the time of writing this).
+
+
 A Next.js application that displays cryptocurrency market data in a paginated table format, built with TypeScript and Tailwind CSS.
 
 ![Cryptocurrency Market Data Table](./public/screenshot.png)
