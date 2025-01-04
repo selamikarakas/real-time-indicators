@@ -12,11 +12,13 @@ interface CryptoTableProps {
   data: CryptocurrencyData[]
 }
 
+const ASCENDING_COLUMNS = ["rank", "name"];
+
 export function CryptoTable({ data }: CryptoTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [sortColumn, setSortColumn] = useState<string | null>('rank')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
-  
+
   const itemsPerPage = 10
   const totalPages = Math.ceil(data.length / itemsPerPage)
 
@@ -25,7 +27,7 @@ export function CryptoTable({ data }: CryptoTableProps) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
     } else {
       setSortColumn(column)
-      setSortDirection(column === 'rank' ? 'asc' : 'desc')
+      setSortDirection(ASCENDING_COLUMNS.includes(column) ? 'asc' : 'desc')
     }
   }
 
@@ -39,14 +41,14 @@ export function CryptoTable({ data }: CryptoTableProps) {
   return (
     <div className="w-full">
       <Table>
-        <CryptoTableHeader 
+        <CryptoTableHeader
           onSort={handleSort}
           sortColumn={sortColumn}
           sortDirection={sortDirection}
         />
         <TableBody>
           {getCurrentPageData().map((crypto, index) => (
-            <CryptoTableRow 
+            <CryptoTableRow
               key={`${crypto.id}-${crypto.rank}-${index}`}
               crypto={crypto}
               index={index}
