@@ -43,7 +43,11 @@ export function CryptoTableHeader({ onSort, sortColumn, sortDirection }: CryptoT
             Rank
           </SortableHeader>
         </TableHead>
-        <TableHead>Name</TableHead>
+        <TableHead onClick={() => onSort('name')} className="cursor-pointer">
+          <SortableHeader column="name" sortColumn={sortColumn} sortDirection={sortDirection}>
+            Name
+          </SortableHeader>
+        </TableHead>
         
         <TableHead onClick={() => onSort('price')} className="cursor-pointer">
           <SortableHeader column="price" sortColumn={sortColumn} sortDirection={sortDirection}>
@@ -78,4 +82,4 @@ export function CryptoTableHeader({ onSort, sortColumn, sortDirection }: CryptoT
       </TableRow>
     </TableHeader>
   )
-} 
+}
